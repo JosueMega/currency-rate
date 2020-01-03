@@ -83,7 +83,7 @@ const DoRequest = async (num,currencyt) => {
    })
  }
 
- currencyApap();
+ 
   module.exports={
     DoRequest: currencyApap
   }
