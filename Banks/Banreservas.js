@@ -6,7 +6,8 @@ let {banreservas} = url;
 
 //creating the object 
 let obj = {
-  url: `${banreservas}`,
+  url: `https://www.banreservas.com/`,
+  "rejectUnauthorized": false,
   transform: body => cheerio.load(body)
 }
 
@@ -58,7 +59,7 @@ const  DoRequest =async ()=>{
 
                                
                         resolve(reTaza)
-                        // console.log(reTaza);
+                        //console.log(reTaza);
                     })
                     .catch (ex=>{
 
@@ -70,7 +71,7 @@ const  DoRequest =async ()=>{
             }
          })
     }
-        
+    DoRequest();
     module.exports={
         DoRequest:DoRequest
     }
