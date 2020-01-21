@@ -4,13 +4,12 @@ const reserva  = require('./Banreservas');
     const getRateList =async () => {
 
 
-
-
             let  apapResult = await  apap.DoRequest();
             let reservaResult =await   reserva.DoRequest();                
 
-            let GetCurencymount = getCurencymounts("US", "buy");
-            let list = GetCurencymount(reservaResult, apapResult)
+            let GetCurencymount = getCurencymounts("USD", "Compra");
+            //let list = GetCurencymount(reservaResult, apapResult)
+            let list = GetCurencymount(reservaResult)
             list = list.sort((a, b) => {
                 if (a.mount > b.mount) {
                     return 1;

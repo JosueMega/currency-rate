@@ -11,6 +11,13 @@ let obj = {
   transform: body => cheerio.load(body)
 }
 
+function addcurrency(mount, bussine, currencyType) {          
+   
+  
+    currency= {mount,currencyType,bussine}
+    return currency;
+  
+}
 
 const  DoRequest =async ()=>{
       return   new Promise((resolve,reject)=>{
@@ -18,48 +25,25 @@ const  DoRequest =async ()=>{
                 rp(obj)
                     .then(function ($) {
                           
-                            let reTaza = [];    
-                            let counter = 0; 
-                            let currency ={}; 
-                            let currencyType="";
-                            let bussine = ""; 
-                            let mount = "";   
+                        let datatasas = [];    
+                        let reTaza = [];    
+                        let counter = 0; 
+                        let currency ={}; 
+                        let datalimpia = "";   
                         $('.currency-box-table ').find('tbody').find('tr').find('td').each(function (i, elem) { 
-                            mount = $(this).html()
-                            if (i > 3  & i < 6) {
-                                currencyType = "US";
-                              
-                                if (counter==0) {
-                                    bussine ="buy";                                    
-                                     currency  = {mount,currencyType,bussine};
-                                     counter++
-                                    }else{
-                                        bussine ="sale";
-                                        currency= {mount,currencyType,bussine}
-                                        counter=0;
-                                    }                                    
-                                    reTaza.push(currency);
-                                    } else if (i > 6  & i <= 8){
-                                        
-                                        currencyType = "EUR"
-                                if (counter==0) {
-                                    bussine ="buy";
-                                    currency  = {mount,currencyType,bussine};
-                                    counter++
-                                   }else{
-                                      bussine ="sale";
-                                       currency= {mount,currencyType,bussine}
-                                       counter=0;
-                                   }         
-                                                              
-                                   reTaza.push(currency);
-                              }
-                                    
+                            datalimpia = $(this).html()
+
+                            datatasas.push(datalimpia);
+
                                  });
+               
+                                reTaza.push(addcurrency(datatasas[4],datatasas[1],datatasas[3]));
+                                reTaza.push(addcurrency(datatasas[5],datatasas[1],datatasas[6]));
+                                reTaza.push(addcurrency(datatasas[7],datatasas[2],datatasas[3]));
+                                reTaza.push(addcurrency(datatasas[8],datatasas[2],datatasas[6]));
 
                                
                         resolve(reTaza)
-                        //console.log(reTaza);
                     })
                     .catch (ex=>{
 
