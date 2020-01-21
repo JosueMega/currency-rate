@@ -12,6 +12,6 @@ app.get('/CurrencyApi', async (req, res) => {
 let port = process.env.PORT || 8080;
 app.set('port', port);
 app.listen(3000, function () {
-    console.log('Example app listening on port 3001!');
+    console.log('Example app listening on port 3000!');
 });
 
