@@ -2,42 +2,57 @@
 const rp = require('request-promise');
 const cheerio = require('cheerio');
 
-let url = {
-    url:"https://banesco.com.do/",
-    transform:body=>cheerio.load(body)
-}
+let obj = {
+    url: `https://www.banreservas.com/`,
+    "rejectUnauthorized": false,
+    transform: body => cheerio.load(body)
+  }
 
-function DoRequest(){
-    let Tasa = {};
-    return new Promise((resolve, reject)=>{
-        rp(url)
-            .then(($=>{
-                try{
-                $(".values-currency").find('span').each(function(i,elem){
-                    switch (i) {
-                        case 2:         
-                           Tasa["linea" +i] = Object.assign({"Compra":$(this).text()})
-                            break;
-                            case 4:
-                            Tasa["linea" +i] = Object.assign({"Venta":$(this).text()})
-                            break;  
-                    }
-                    resolve(Tasa);
-                    console.log(Tasa);
-                }).html();  
-            }catch(ex){
-                reject(ex);
-            }
-            }));             
-    });
-}
+  
+const banco = 'Banesco';
+const addcurrency = (mount, bussine, currencyType) => {       
+    currency= {mount,currencyType,bussine,banco}
+    return currency;
+  }
 
-// jQuery('.view-content')[2].getElementsByTagName("p")[1]getElementsByTagName('span')
+const  DoRequest =async ()=>{
+    return   new Promise((resolve,reject)=>{
+          try {                
+              rp(obj)
+                  .then(function ($) {
+                        
+                      let datatasas = [];    
+                      let reTaza = [];                            
+                      let datalimpia = "";   
+                      console.log($('.banca-mobile '))
+                      //.each(function (i, elem) {                           
+                          //datalimpia = $(this).html()
+                          console.log('found');
+                         // datatasas.push(datalimpia);
 
-module.exports= {
-    DoRequest:DoRequest
-};
+                        //       });
+             
+                              reTaza.push(addcurrency(datatasas[4],datatasas[1],datatasas[3]));
+                              reTaza.push(addcurrency(datatasas[5],datatasas[1],datatasas[6]));
+                              reTaza.push(addcurrency(datatasas[7],datatasas[2],datatasas[3]));
+                              reTaza.push(addcurrency(datatasas[8],datatasas[2],datatasas[6]));
 
+                              console.log('paso por aqui');
+                      resolve(reTaza)
+                  })
+                  .catch (ex=>{
 
+                      reject(ex);
+                  });                
+              
+          } catch (error) {
+              reject(error);
+          }
+       })
+  }
+  DoRequest();
+  module.exports={
+      DoRequest:DoRequest
+  }
  
 

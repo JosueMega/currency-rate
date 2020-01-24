@@ -11,13 +11,13 @@ let obj = {
   transform: body => cheerio.load(body)
 }
 
-function addcurrency(mount, bussine, currencyType) {          
-   
-  
-    currency= {mount,currencyType,bussine}
+let currency ={}; 
+const banco = 'Banreservas';
+const addcurrency = (mount, bussine, currencyType) => {       
+    currency= {mount,currencyType,bussine,banco}
     return currency;
-  
-}
+  }
+
 
 const  DoRequest =async ()=>{
       return   new Promise((resolve,reject)=>{
@@ -26,9 +26,7 @@ const  DoRequest =async ()=>{
                     .then(function ($) {
                           
                         let datatasas = [];    
-                        let reTaza = [];    
-                        let counter = 0; 
-                        let currency ={}; 
+                        let reTaza = [];                            
                         let datalimpia = "";   
                         $('.currency-box-table ').find('tbody').find('tr').find('td').each(function (i, elem) { 
                             datalimpia = $(this).html()

@@ -1,15 +1,17 @@
 const apap = require('./Apap');
 const reserva  = require('./Banreservas');
+const banesco  = require('./Banesco');
 
     const getRateList =async () => {
 
 
-            let  apapResult = await  apap.DoRequest();
-            let reservaResult =await   reserva.DoRequest();                
+            let  banescoresult = await  banesco.DoRequest();
+            //let reservaResult =await   reserva.DoRequest();                
 
-            let GetCurencymount = getCurencymounts("USD", "Compra");
+            //let GetCurencymount = getCurencymounts("USD", "Compra");
+            let GetCurencymount = getCurencymounts("USD", "ALL");
             //let list = GetCurencymount(reservaResult, apapResult)
-            let list = GetCurencymount(reservaResult)
+            let list = GetCurencymount( banescoresult)
             list = list.sort((a, b) => {
                 if (a.mount > b.mount) {
                     return 1;
@@ -52,7 +54,12 @@ const reserva  = require('./Banreservas');
             var currencyList = [];
             args.filter(element => {
                 element.filter(obj => {
-                    if (obj.currencyType == currencyType && obj.bussine == bussine) {
+                    if (
+                        (obj.currencyType == currencyType && obj.bussine == bussine) ||
+                        (obj.currencyType == currencyType &&  bussine==="ALL") ||
+                        ( currencyType==="ALL" && obj.bussine == bussine)
+                    
+                    ){
                        currencyList.push(obj);
                     }
                 })
